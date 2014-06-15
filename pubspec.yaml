@@ -1,4 +1,5 @@
 name:  proxy_collection
 version: 1.0.0
 description:  A simple set of proxy collection class mixin skeletons.
+author: Simon Pai <simon.pai@gmail.com>
 homepage: https://github.com/simonpai/dart-proxy-collection
