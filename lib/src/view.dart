@@ -58,7 +58,7 @@ abstract class UnmodifiableSetMixin<E> implements Set<E> {
 abstract class ViewPair<E> {
   
   /// The source object.
-  E get source;
+  E source;
   
   /// The unmodifiable view of the [source] object.
   E get view;
@@ -70,18 +70,17 @@ abstract class ViewPair<E> {
 class ListViewPair<E> implements ViewPair<List<E>> {
   
   @override
-  final List<E> source;
-  
-  @override
   List<E> get view => _view;
   List<E> _view;
   
-  /** Construct a source-view pair of list. If [source] is omitted, it will be
-   * defaulted to a new empty list.
-   */
-  ListViewPair([List<E> source]) :
-  this.source = source != null ? source : new List() {
-    _view = new UnmodifiableListView(this.source);
+  @override
+  List<E> get source => _source;
+  List<E> _source = new List();
+  
+  @override
+  void set source(List<E> value) {
+    _source = value;
+    _view = _source == null ? null : new UnmodifiableListView(this._source);
   }
   
 }
@@ -91,18 +90,17 @@ class ListViewPair<E> implements ViewPair<List<E>> {
 class SetViewPair<E> implements ViewPair<Set<E>> {
   
   @override
-  final Set<E> source;
-  
-  @override
   Set<E> get view => _view;
   Set<E> _view;
   
-  /** Construct a source-view pair of set. If [source] is omitted, it will be
-   * defaulted to a new empty set.
-   */
-  SetViewPair([Set<E> source]) :
-  this.source = source != null ? source : new Set() {
-    _view = new UnmodifiableSetView(this.source);
+  @override
+  Set<E> get source => _source;
+  Set<E> _source = new Set();
+  
+  @override
+  void set source(Set<E> value) {
+    _source = value;
+    _view = _source == null ? null : new UnmodifiableSetView(this._source);
   }
   
 }
@@ -112,18 +110,17 @@ class SetViewPair<E> implements ViewPair<Set<E>> {
 class MapViewPair<K, V> implements ViewPair<Map<K, V>> {
   
   @override
-  final Map<K, V> source;
-  
-  @override
   Map<K, V> get view => _view;
   Map<K, V> _view;
   
-  /** Construct a source-view pair of map. If [source] is omitted, it will be
-   * defaulted to a new empty map.
-   */
-  MapViewPair([Map<K, V> source]) :
-  this.source = source != null ? source : new Map() {
-    _view = new UnmodifiableMapView(this.source);
+  @override
+  Map<K, V> get source => _source;
+  Map<K, V> _source = new Map();
+  
+  @override
+  void set source(Map<K, V> value) {
+    _source = value;
+    _view = _source == null ? null : new UnmodifiableMapView(this._source);
   }
   
 }
