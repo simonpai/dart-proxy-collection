@@ -2,19 +2,31 @@ part of proxy_collection;
 
 typedef E _Getter<E>();
 
+class _SourceBase<E> {
+  
+  _SourceBase(this._instance, this._getter);
+  final _Getter<E> _getter;
+  final E _instance;
+  
+  E get _source => _instance != null ? _instance : _getter();
+}
+
 // TODO: make list/set/queue extend from iterable
 
 /** A proxy [Iterable] which delegates its APIs to a source iterable dynamically.
  */
-class ProxyIterable<E> implements Iterable<E> {
+class ProxyIterable<E> extends _SourceBase<Iterable<E>> implements Iterable<E> {
   
-  /** Construct a proxy iterable with a [getter] to delegates to source iterable.
+  /** Construct a proxy iterable with delegates to a [source] iterable.
    */
-  ProxyIterable(Iterable<E> getter()) : 
-  this._getter = getter;
+  ProxyIterable(Iterable<E> source) :
+  super(source, null);
   
-  final _Getter<Iterable<E>> _getter;
-  Iterable<E> get _source => _getter();
+  /** Construct a proxy iterable with delegates to a source iterable determined
+   * by a [getter] dynamically.
+   */
+  ProxyIterable.dynamic(Iterable<E> getter()) :
+  super(null, getter);
   
   // Iterable //
   @override
@@ -79,15 +91,18 @@ class ProxyIterable<E> implements Iterable<E> {
 
 /** A proxy [List] which delegates its APIs to a source list dynamically.
  */
-class ProxyList<E> implements List<E> {
+class ProxyList<E> extends _SourceBase<List<E>> implements List<E> {
   
-  /** Construct a proxy list with a [getter] to delegates to source list.
+  /** Construct a proxy list which delegates to a [source] list.
    */
-  ProxyList(List<E> getter()) : 
-  this._getter = getter;
+  ProxyList(List<E> source) :
+  super(source, null);
   
-  final _Getter<List<E>> _getter;
-  List<E> get _source => _getter();
+  /** Construct a proxy list which delegates to a source list determined
+   * by a [getter] dynamically.
+   */
+  ProxyList.dynamic(List<E> getter()) :
+  super(null, getter);
   
   // Iterable //
   @override
@@ -209,15 +224,18 @@ class ProxyList<E> implements List<E> {
 
 /** A proxy [Set] which delegates its APIs to a source set dynamically.
  */
-class ProxySet<E> implements Set<E> {
+class ProxySet<E> extends _SourceBase<Set<E>> implements Set<E> {
   
-  /** Construct a proxy set with a [getter] to delegates to source set.
+  /** Construct a proxy set which delegates to a [source] set.
    */
-  ProxySet(Set<E> getter()) : 
-  this._getter = getter;
+  ProxySet(Set<E> source) :
+  super(source, null);
   
-  final _Getter<Set<E>> _getter;
-  Set<E> get _source => _getter();
+  /** Construct a proxy set which delegates to a source set determined by a
+   * [getter] dynamically.
+   */
+  ProxySet.dynamic(Set<E> getter()) :
+  super(null, getter);
   
   // Iterable //
   @override
@@ -310,15 +328,18 @@ class ProxySet<E> implements Set<E> {
 
 /** A proxy [Queue] which delegates its APIs to a source queue dynamically.
  */
-class ProxyQueue<E> implements Queue<E> {
+class ProxyQueue<E> extends _SourceBase<Queue<E>> implements Queue<E> {
   
-  /** Construct a proxy queue with a [getter] to delegates to source queue.
+  /** Construct a proxy queue which to delegates to a [source] queue.
    */
-  ProxyQueue(Queue<E> getter()) : 
-  this._getter = getter;
+  ProxyQueue(Queue<E> source) :
+  super(source, null);
   
-  final _Getter<Queue<E>> _getter;
-  Queue<E> get _source => _getter();
+  /** Construct a proxy queue which to delegates to a source queue determined
+   * by a [getter] dynamically.
+   */
+  ProxyQueue.dynamic(Queue<E> getter()) :
+  super(null, getter);
   
   // Iterable //
   @override
@@ -405,15 +426,18 @@ class ProxyQueue<E> implements Queue<E> {
 
 /** A proxy [Map] which delegates its APIs to a source map dynamically.
  */
-class ProxyMap<K, V> implements Map<K, V> {
+class ProxyMap<K, V> extends _SourceBase<Map<K, V>> implements Map<K, V> {
   
-  /** Construct a proxy map with a [getter] to delegates to source map.
+  /** Construct a proxy map which delegates to a [source] map.
    */
-  ProxyMap(Map<K, V> getter()) : 
-  this._getter = getter;
+  ProxyMap(Map<K, V> source) :
+  super(source, null);
   
-  final _Getter<Map<K, V>> _getter;
-  Map<K, V> get _source => _getter();
+  /** Construct a proxy map which delegates to a source map determined by a 
+   * [getter] dynamically.
+   */
+  ProxyMap.dynamic(Map<K, V> getter()) : 
+  super(null, getter);
   
   // Map //
   @override

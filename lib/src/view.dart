@@ -6,7 +6,7 @@ class UnmodifiableSetView<E> extends ProxySet<E> with UnmodifiableSetMixin<E> {
   
   /// Construct an unmodifiable set view from [source] set.
   UnmodifiableSetView(Set<E> source) :
-  super(() => source);
+  super(source);
   
 }
 
